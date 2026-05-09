@@ -30,6 +30,9 @@ jobs:
           # User used for file permissions in the container
           MARP_USER: root:root
 
+      - name: Copy Assets
+        run: cp -r assets dist/    
+
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
