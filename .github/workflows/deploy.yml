@@ -31,7 +31,9 @@ jobs:
           MARP_USER: root:root
 
       - name: Copy Assets
-        run: cp -r assets dist/    
+        run: |
+          sudo chown -R $USER:$USER dist
+          cp -r assets dist/    
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
