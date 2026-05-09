@@ -1,0 +1,47 @@
+name: Deploy Marp Slides
+
+on:
+  push:
+    branches:
+      - main # Trigger the workflow on every push to the main branch
+
+# Permissions required for authentication and deploying to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Build Marp Slides
+        uses: marp-team/marp-cli-action@v3
+        with:
+          # Convert index.md to HTML and enable local file access for images/assets
+          args: index.md --html --allow-local-files -o dist/index.html
+        env:
+          # User used for file permissions in the container
+          MARP_USER: root:root
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/ # Directory containing the generated HTML and assets
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
