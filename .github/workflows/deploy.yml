@@ -21,8 +21,8 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Build Marp Slides
-        uses: marp-team/marp-cli-action@v3
+      - name: Build Marp Slides        
+        uses: docker://marpteam/marp-cli
         with:
           # Convert index.md to HTML and enable local file access for images/assets
           args: index.md --html --allow-local-files -o dist/index.html
