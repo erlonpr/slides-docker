@@ -54,4 +54,35 @@ Programador | **Devops** | Infraestrutura
 
 ---
 
+## :whale: Virtualização vs. Contêinerização
 
+| Máquina Virtual (VM) | Contêiner (Docker) |
+| :--- | :--- |
+| Emula o hardware e possui um SO completo | Compartilha o Kernel do SO hospedeiro |
+| Pesado (Gigas de tamanho) | Leve (Megabytes) |
+| Velocidade de inicialização lenta | Velocidade de inicialização rápida |
+| Isolamento de SO | Isolamento de processos   |
+
+> Namespaces: Isolam os processos
+> Cgroups: Controlam o uso de recursos
+
+---
+
+## :whale: O que é o Docker?
+
+Ferramenta de automação de deployment baseada em contêineres.
+
+- Docker
+```docker
+[Hardware] -> [Kernel SO Host] -> [Docker Daemon] -> [Contêineres] -> [Aplicação]
+```
+
+- Virtualização
+```virtualizacao
+[Hardware] -> [Kernel SO Host] -> [Hypervisor Hosted] -> [SO Convidado] -> [Aplicação]
+```
+
+> Hypervisor Tipo 2 (Hosted): VMWare, VirtualBox
+> Hypervisor Tipo 1 (Bare-metal): Xen, Hyper-V, Proxmox
+
+---
