@@ -54,6 +54,14 @@ Programador | **Devops** | Infraestrutura
 
 ---
 
+## :whale: O que é o Docker?
+
+Ferramenta de automação baseada em contêineres que facilita o desenvolvimento, testes e deployment de aplicações.
+
+![bg right:40%](./assets/gif/developer.gif)
+
+---
+
 ## :whale: Virtualização vs. Contêinerização
 
 | Máquina Virtual (VM) | Contêiner (Docker) |
@@ -68,9 +76,7 @@ Programador | **Devops** | Infraestrutura
 
 ---
 
-## :whale: O que é o Docker?
-
-Ferramenta de automação baseada em contêineres que facilita o desenvolvimento, testes e deployment de aplicações.
+## :whale: Arquitetura do Docker
 
 - Docker
 ```
@@ -140,6 +146,15 @@ docker -v
 - **Daemon**: Processo em segundo plano responsável por gerenciar os contêineres
 - **Cliente**: Interface de linha de comando (CLI)
 - **Registries**: Repositórios de imagens (Docker Hub, GHCR)
+
+---
+
+## :whale: DockerHub
+
+![w:750](./assets/img/docker-hub.png)
+
+Registro público de imagens Docker
+[hub.docker.com/search](https://hub.docker.com/search)
 
 ---
 
