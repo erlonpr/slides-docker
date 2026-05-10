@@ -87,3 +87,70 @@ Ferramenta de automação baseada em contêineres que facilita o desenvolvimento
 > *- Tipo 2 (Hosted): VMWare, VirtualBox*
 
 ---
+
+## :whale: Instalação do Docker no Linux
+
+```bash
+# Comando para instalar o Docker no Linux
+curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
+
+# Comandos para adicionar o usuário atual ao grupo docker
+sudo usermod -aG docker $USER
+newgrp docker # ativa o grupo docker sem reiniciar o computador
+
+# Comando para ativar o daemon do Docker
+sudo systemctl enable docker
+sudo systemctl start docker
+
+# Comando para testar a instalação do Docker
+docker -v
+```
+---
+
+## :whale: Instalação do Docker no Windows
+
+> Requisitos: WSL 2 e ativar a virtualização na BIOS/UEFI
+
+```powershell
+# Comando para instalar o WSL:
+wsl --install
+
+# Caso esteja instalado o WSL 1, é preciso atualizá-lo com o comando:
+wsl --update
+
+# Comando para definir o WSL 2 como padrão
+wsl --set-default-version 2
+
+# É necessário reiniciar o computador para que o WSL 2 seja ativado através do comando:
+shutdown /r /t 0
+
+# Comando para instalar o Docker no Windows
+winget install Docker.DockerDesktop
+
+# É necessário abrir o Docker Desktop e aguardar a inicialização do daemon
+
+# Comando para testar a instalação do Docker
+docker -v
+```
+
+---
+
+## :whale: Componentes do Docker
+
+- **Daemon**: Processo em segundo plano responsável por gerenciar os contêineres
+- **Cliente**: Interface de linha de comando (CLI)
+- **Registries**: Repositórios de imagens (Docker Hub, GHCR)
+
+---
+
+## :whale: Conceitos fundamentais
+
+- **Imagem**: Template para criar contêineres
+- **Contêiner**: Instância de uma imagem
+- **Volume**: Armazenamento persistente
+- **Rede**: Comunicação entre contêineres
+- **Variáveis de ambiente**: Configurações dos contêineres
+
+
+
+
