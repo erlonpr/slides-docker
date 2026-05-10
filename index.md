@@ -70,19 +70,20 @@ Programador | **Devops** | Infraestrutura
 
 ## :whale: O que é o Docker?
 
-Ferramenta de automação de deployment baseada em contêineres.
+Ferramenta de automação baseada em contêineres que facilita o desenvolvimento, testes e deployment de aplicações.
 
 - Docker
-```docker
+```
 [Hardware] -> [Kernel SO Host] -> [Docker Daemon] -> [Contêineres] -> [Aplicação]
 ```
 
 - Virtualização
-```virtualizacao
+```
 [Hardware] -> [Kernel SO Host] -> [Hypervisor Hosted] -> [SO Convidado] -> [Aplicação]
 ```
 
-> Hypervisor Tipo 2 (Hosted): VMWare, VirtualBox
-> Hypervisor Tipo 1 (Bare-metal): Xen, Hyper-V, Proxmox
+> *Hypervisor: software que cria e executa máquinas virtuais*
+> *- Tipo 1 (Bare-metal): Xen, Hyper-V, Proxmox*
+> *- Tipo 2 (Hosted): VMWare, VirtualBox*
 
 ---
