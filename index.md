@@ -151,10 +151,9 @@ docker -v
 
 ## :whale: DockerHub
 
-![w:750](./assets/img/docker-hub.png)
-
 Registro público de imagens Docker
-[hub.docker.com/search](https://hub.docker.com/search)
+![w:750](./assets/img/docker-hub.png)
+Fonte: [hub.docker.com/search](https://hub.docker.com/search)
 
 ---
 
@@ -166,6 +165,69 @@ Registro público de imagens Docker
 - **Rede**: Comunicação entre contêineres
 - **Variáveis de ambiente**: Configurações dos contêineres
 
+---
+
+## :whale: O que é uma imagem?
+
+- É um pacote estático, somente leitura (read-only).
+- Contém tudo o que a aplicação precisa para rodar:
+  - código
+  - runtime
+  - bibliotecas
+  - variáveis de ambiente
+- Funciona como um **molde** ou **receita de bolo**
+- A partir de uma imagem, cria-se vários **contêineres**
+
+---
+
+## :whale: Dockerfile
+
+Arquivo de texto com as instruções para montar uma imagem
+
+```dockerfile
+# Define a imagem base obtida no Docker Hub
+FROM node:18-alpine
+
+# Define o diretório de trabalho dentro do contêiner
+WORKDIR /app
+
+# Copia os arquivos da sua máquina para o contêiner
+COPY package.json index.js ./
+
+# Instala as dependências
+RUN npm install
+
+# Comando que o contêiner vai rodar ao iniciar
+CMD ["node", "index.js"]
+```
+
+---
+
+## :whale: Fluxo de construção de imagens
+
+![w:1000](./assets/img/dockerfile.png)
+
+Fonte: [medium.com/swlh/understand-dockerfile-dd11746ed183](https://medium.com/swlh/understand-dockerfile-dd11746ed183)
+
+---
+
+## :whale: Comandos básicos de imagens
+
+```bash
+# Lista todas as imagens
+docker images
+
+# Puxa uma imagem do Docker Hub
+docker pull ubuntu:22.04
+
+# Remove uma imagem
+docker rmi ubuntu:22.04
+
+# Constrói uma imagem a partir de um Dockerfile
+docker build -t meu-app .
+```
+
+---
 
 
 
