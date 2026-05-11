@@ -132,7 +132,6 @@ shutdown /r /t 0
 
 # Comando para instalar o Docker no Windows
 winget install Docker.DockerDesktop
-
 # É necessário abrir o Docker Desktop e aguardar a inicialização do daemon
 
 # Comando para testar a instalação do Docker
@@ -182,7 +181,7 @@ Fonte: [hub.docker.com/search](https://hub.docker.com/search)
 
 ## :whale: Dockerfile
 
-Arquivo de texto com as instruções para montar uma imagem
+Arquivo YAML com as instruções para montar uma imagem
 
 ```dockerfile
 # Define a imagem base obtida no Docker Hub
@@ -229,5 +228,154 @@ docker build -t meu-app .
 
 ---
 
+## :whale: O que é um contêiner?
 
+- É a **imagem em execução** (instância da "receita").
+- Um processo isolado do resto do sistema operacional, com sua própria rede e arquivos.
+- **Efêmero:** Por padrão, qualquer dado salvo dentro dele é perdido quando o contêiner é destruído (por isso usamos volumes).
+- Pode ser iniciado, pausado ou destruído rapidamente.
 
+---
+
+## :whale: Comandos básicos de contêineres
+
+```bash
+# Comando para listar os contêineres em execução:
+docker ps
+
+# Comando para listar os contêineres em execução e parados:
+docker ps -a
+
+# Comando para criar e rodar um novo contêiner em segundo plano:
+docker run -d --name meu-site nginx
+
+# Comando para parar um contêiner existente:
+docker stop meu-site
+
+# Comando para reiniciar um contêiner existe:
+docker start meu-site
+
+# Comando para remover um contêiner (ele precisa estar parado):
+docker rm meu-site
+```
+---
+
+## :whale: Como ver os logs do container
+
+```bash
+# Comando para ver o histórico completo de log:
+docker logs meu-site
+
+# Comando para acompanhar os logs em tempo real (debug):
+docker logs -f meu-site
+
+# Comando para ver apenas as últimas 50 linhas:
+docker logs --tail 50 meu-site
+```
+
+---
+
+## :whale: O que é um volume?
+
+- Contêineres são voláteis 
+- Volumes funcionam como uma unidade de armazenamento conectado ao contêiner.
+- Os dados sobrevivem intactos mesmo se o contêiner for destruído, atualizado ou recriado.
+---
+
+## :whale: Tipos de armazenamento
+Existem duas formas principais de persistir dados no Docker:
+
+| Tipo | Local de salvamento | Quando usar |
+| :--- | :--- | :--- |
+| **Named Volumes** | Gerenciado pelo próprio Docker | Bancos de dados (Postgres, MySQL) e uso em produção. |
+| **Bind Mounts** | Pasta específica da máquina | Desenvolvimento (*Hot Reload*) |
+
+---
+
+## :whale: Comandos básicos de volumes
+
+```bash
+# Comando para criar um volume:
+docker volume create dados-do-banco
+
+# Comando para listar todos os volumes:
+docker volume ls
+
+# Comando para verificar onde o volume está salvo fisicamente:
+docker volume inspect dados-do-banco
+
+# Comando para apagar um volume específico:
+docker volume rm dados-do-banco
+
+# Comando para apagar todos os volumes que não estão sendo usados:
+docker volume prune
+```
+
+---
+
+## :whale: O que são redes Docker?
+
+- Contêineres nascem totalmente isolados.
+- As redes permitem que contêineres falem entre si, com a máquina host ou com a internet de forma segura.
+- O Docker utiliza um DNS interno para que um contêiner acha o outro apenas pelo *nome* (não precisa descobrir o IP)
+
+---
+
+## :whale: Tipos de redes
+
+| Tipo | Como funciona? | Quando usar? |
+| :--- | :--- | :--- |
+| **Bridge** | Rede virtual interna (VPN padrão) com port mapping | Comunicação entre contêineres no mesmo PC por meio de IP internos |
+| **Host** | O contêiner usa a mesma rede da máquina (Remove o isolamento) | Quando precisa de máxima performance e não quer mapear portas |
+| **None** | Desabilita totalmente a rede (somente interface loopback) | Scripts isolados de segurança máxima |
+| **Overlay** | Conecta contêineres em servidores diferentes por meio de um túnel VXLAN | Ambientes complexos / Clusterização (Docker Swarm) |
+
+---
+
+## :whale: Comandos básicos de redes
+
+```bash
+# Comando para listar todas as redes:
+docker network ls
+
+# Comando para criar uma rede:
+docker network create rede-da-faculdade
+
+# Comando para visualizar detalhes de uma rede (mostra o IP de cada contêiner nela):
+docker network inspect rede-da-faculdade
+
+# Comando para conectar um contêiner que já está rodando a uma rede:
+docker network connect rede-da-faculdade meu-site
+
+# Comando para remover uma rede:
+docker network rm rede-da-faculdade
+```
+
+---
+
+## :whale: O que são variáveis de ambiente?
+
+- São valores dinâmicos passados para o contêiner no momento em que ele é iniciado
+- Não se deve "chumbar" (hardcode) senhas, tokens de API ou IPs dentro do código ou da imagem Docker
+- Criar imagem genérica e use variáveis para mudar o seu comportamento
+
+---
+
+## :whale: Como definir variáveis de ambiente
+
+- Flag `-e` no comando `docker run`
+`docker run -e POSTGRES_PASSWORD=senha_secreta postgres`
+
+- Docker Compose
+```yaml
+services:
+  api:
+    image: node:18-alpine
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+```
+- Arquivo `.env` mantém dados sensíveis fora do código-fonte
+`PORT=3000`
+
+---
