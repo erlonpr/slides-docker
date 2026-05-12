@@ -390,16 +390,18 @@ services:
 
 ---
 
-## :whale: Instalação do Docker Compose (v1 - Legado)
+## :whale: Instalação do Docker Compose
 
-> A versão 1 foi descontinuada em julho de 2023
+### Instalação v1 (legado) no Linux
 
-### Instalação no Linux
+> A versão v1 foi descontinuada em julho de 2023
+
 ```bash
-# Comando para baixar o Docker Compose:
-sudo curl -L \
-"https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
--o /usr/local/bin/docker-compose
+# Comando para baixar o Docker Compose v1 no Linux:
+sudo curl \
+  -L \
+  "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
+  -o /usr/local/bin/docker-compose
 
 # Comando para aplicar permissões de execução ao binário:
 sudo chmod +x /usr/local/bin/docker-compose
@@ -408,10 +410,36 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 ```
 
-### Instalação no Windows
+---
+## :whale: Instalação do Docker Compose
 
-No **Windows**, o Docker Compose já vem instalado com o Docker Desktop
-> Para alternar entre a v1 e v2, basta acessar as configurações (`Settings > General`)
+### Instalação v2 no Linux
+
+Via de regra, já vem instalado como plugin ao utilizar o **script de instalação** oficial do Docker
+
+Já em algumas distribuições Linux, é preciso instalar o plugin separadamente:
+
+```bash
+# Comando para instalar o Docker Compose v2 no Debian/Ubuntu:
+sudo apt install docker-compose-plugin
+
+# Comando para instalar o Docker Compose v2 no Arch Linux:
+sudo pacman -S docker-compose
+
+# Comando para verificar a instalação do Docker Compose v2:
+docker compose version
+```
+
+---
+
+## :whale: Instalação do Docker Compose
+
+### Instalação da v1 e v2 no Windows
+
+O Docker Compose já vem instalado com o Docker Desktop
+
+> Versões antigas do Docker Desktop permitiam alternar entre a v1 e v2 acessando as configurações (`Settings > General`)
+> Atualmente, o Docker Compose v2 é o padrão no Docker Desktop
 
 ---
 
@@ -436,8 +464,9 @@ docker run -d \
   --name nome-do-container \
   --network nome-da-rede \
   -v nome-do-volume:/var/lib/postgresql/data \
-  -e POSTGRES_USER=admin \
-  -e POSTGRES_PASSWORD=senha_secreta \
+  -e POSTGRES_USER=nome-do-usuario \
+  -e POSTGRES_PASSWORD=senha-do-usuario \
+  -e POSTGRES_DB=nome-do-banco \
   -p 5432:5432 \
   postgres:15-alpine
 ```
@@ -454,8 +483,9 @@ services:
     ports:
       - "5432:5432" # mapeamento de porta (porta do host : porta do contêiner)
     environment:
-      POSTGRES_USER: admin # variável injetada para criar o usuário
-      POSTGRES_PASSWORD: senha_secreta # variável injetada para definir a senha
+      - POSTGRES_USER=nome-do-usuario # variável para criar o usuário
+      - POSTGRES_PASSWORD=senha-do-usuario # variável para definir a senha
+      - POSTGRES_DB=nome-do-banco # variável para criar o banco de dados
     volumes:
       - nome-do-volume:/var/lib/postgresql/data # pasta interna gerenciada pelo Docker
     networks:
