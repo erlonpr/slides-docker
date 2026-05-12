@@ -325,7 +325,7 @@ docker volume prune
 
 | Tipo | Como funciona? | Quando usar? |
 | :--- | :--- | :--- |
-| **Bridge** | Rede virtual interna (VPN padrão) com port mapping | Comunicação entre contêineres no mesmo PC por meio de IP internos |
+| **Bridge** | Rede virtual interna (VPN ) com port mapping (*tipo de rede padrão*) | Comunicação entre contêineres no mesmo PC por meio de IP internos |
 | **Host** | O contêiner usa a mesma rede da máquina (Remove o isolamento) | Quando precisa de máxima performance e não quer mapear portas |
 | **None** | Desabilita totalmente a rede (somente interface loopback) | Scripts isolados de segurança máxima |
 | **Overlay** | Conecta contêineres em servidores diferentes por meio de um túnel VXLAN | Ambientes complexos / Clusterização (Docker Swarm) |
@@ -355,9 +355,11 @@ docker network rm rede-da-faculdade
 
 ## :whale: O que são variáveis de ambiente?
 
-- São valores dinâmicos passados para o contêiner no momento em que ele é iniciado
-- Não se deve "chumbar" (hardcode) senhas, tokens de API ou IPs dentro do código ou da imagem Docker
-- Criar imagem genérica e use variáveis para mudar o seu comportamento
+São valores dinâmicos passados para o contêiner no momento em que ele é iniciado
+
+> Não se deve "chumbar" (hardcode) senhas, tokens de API ou IPs dentro do código ou da imagem Docker
+
+Criar imagem genérica e usar variáveis para mudar o seu comportamento
 
 ---
 
@@ -379,3 +381,113 @@ services:
 `PORT=3000`
 
 ---
+
+## :whale: O que é o Docker Compose?
+
+- Ferramenta para definir e executar **múltiplos contêineres**
+- **Infraestrutura como Código (IaC):** permite documentar a arquitetura em um único arquivo de texto chamado `docker-compose.yml`
+- Facilita o compartilhamento do ambiente de desenvolvimento com a equipe
+
+---
+
+## :whale: Instalação do Docker Compose (v1 - Legado)
+
+> A versão 1 foi descontinuada em julho de 2023
+
+### Instalação no Linux
+```bash
+# Comando para baixar o Docker Compose:
+sudo curl -L \
+"https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
+-o /usr/local/bin/docker-compose
+
+# Comando para aplicar permissões de execução ao binário:
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Comando para testar a instalação:
+docker-compose --version
+```
+
+### Instalação no Windows
+
+No **Windows**, o Docker Compose já vem instalado com o Docker Desktop
+> Para alternar entre a v1 e v2, basta acessar as configurações (`Settings > General`)
+
+---
+
+## :whale: Abordagem imperativa x declarativa
+
+|  | Imperativa | Declarativa |
+| :--- | :--- | :--- |
+| **Formato** | Comandos manuais | Arquivo YAML (IaC) |
+| **Implementação** | Difícil de replicar | Reprodutível e versionável (Git) |
+
+> Imperativa: *Docker CLI*
+> Declarativa: *Docker Compose*
+
+---
+
+## :whale: Criando banco de dados com Docker CLI
+
+Abordagem **imperativa**
+
+```bash
+docker run -d \
+  --name nome-do-container \
+  --network nome-da-rede \
+  -v nome-do-volume:/var/lib/postgresql/data \
+  -e POSTGRES_USER=admin \
+  -e POSTGRES_PASSWORD=senha_secreta \
+  -p 5432:5432 \
+  postgres:15-alpine
+```
+
+---
+
+## :whale: Criando banco de dados com Docker Compose
+```yaml
+# ABORDAGEM DECLARATIVA
+services:
+  db: # nome do serviço (DNS na rede interna)
+    container_name: nome-do-container # nome do container
+    image: postgres:15-alpine # imagem que será baixada do Docker Hub    
+    ports:
+      - "5432:5432" # mapeamento de porta (porta do host : porta do contêiner)
+    environment:
+      POSTGRES_USER: admin # variável injetada para criar o usuário
+      POSTGRES_PASSWORD: senha_secreta # variável injetada para definir a senha
+    volumes:
+      - nome-do-volume:/var/lib/postgresql/data # pasta interna gerenciada pelo Docker
+    networks:
+      - nome-da-rede # conecta este contêiner na rede definida
+volumes:
+  nome-do-volume: 
+    driver: local # cria um volume gerenciado pelo Docker (named volume)
+networks:
+  nome-da-rede:
+    driver: bridge # cria uma rede local virtual (isolamento)
+```
+
+---
+
+## :whale: Comandos básicos do Docker Compose
+
+> Comandos devem ser executados no mesmo diretório onde se encontra o arquivo `docker-compose.yml`
+
+```bash
+# Comando para executar os contêineres:
+docker compose up -d
+
+# Comando para parar e remover os contêineres:
+docker compose down
+
+# Comando para listar os contêineres em execução:
+docker compose ps
+
+# Comando para visualizar os logs dos contêineres:
+docker compose logs -f
+```
+
+---
+
+
