@@ -520,4 +520,19 @@ docker compose logs -f
 
 ---
 
+## :whale: Docker como ferramenta DevOps
 
+- **Desenvolvimento**
+
+  - Devcontainers
+
+- **Laboratório de Testes (OS as a Container)**
+   
+  - Windows: [github.com/dockur/windows](https://github.com/dockur/windows) 
+  - MacOS: [github.com/dockur/macos](https://github.com/dockur/macos)
+  - Linux: [github.com/linuxserver/docker-webtop](https://github.com/linuxserver/docker-webtop)
+  - Android: [github.com/budtmo/docker-android](https://github.com/budtmo/docker-android)
+
+- **Deploy e CI/CD**
+
+  - GitHub Actions 
