@@ -563,7 +563,7 @@ docker compose logs -f
 
 - **Desenvolvimento**
 
-  - Devcontainers
+  - Devcontainers: [containers.dev/templates](https://containers.dev/templates)
 
 - **Laboratório de Testes (OS as a Container)**
    
@@ -574,19 +574,19 @@ docker compose logs -f
 
 - **Deploy e CI/CD**
 
-  - GitHub Actions: [github.com/erlonpr/slides-docker](https://github.com/erlonpr/slides-docker)
+  - GitHub Actions: [github.com/marketplace?type=actions](https://github.com/marketplace?type=actions)
 
 ---
 
-## :whale: Exemplo de ambiente de desenvolvimento (DevContainer)
+## :whale: DevContainers
 
-- É um ambiente de desenvolvimento inteiro rodando dentro de um container
-- Permite padronizar a versão da linguagem (Node, Python, Java) e até as extensões da IDE (VS Code)
+- É um ambiente de desenvolvimento completo rodando dentro de um container
+- Permite padronizar a versão da linguagem de programação(Node, Python, Java) e até as extensões da IDE (VS Code)
 - Permite o compartilhamento do ambiente de desenvolvimento entre os integrantes da equipe
 
 **Requisitos necessários**
 
-> Docker + VS Code + Extensão Dev Containers (ms-vscode-remote.remote-containers)
+> Docker + VS Code + Extensão Dev Containers (`ms-vscode-remote.remote-containers`)
 
 ---
 
