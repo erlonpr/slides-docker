@@ -8,9 +8,6 @@ emoji: true
 # Docker para Iniciantes
 Embale seu código e leve para qualquer lugar
 
-
-
-
 ---
 
 ## :whale: Acesso ao material
@@ -62,6 +59,32 @@ Ferramenta de automação baseada em contêineres que facilita o desenvolvimento
 
 ---
 
+## :whale: Precursor do Docker
+
+- **Linux LXC**: permite isolar ambientes utilizando componentes do Kernel do Linux:
+
+  - **Cgroups (Control Groups)**: Controlam o uso de recursos de hardware (memória RAM, CPU)
+
+  - **Namespaces**: Cria uma camada de invisibilidade (isola o que o processo pode "enxergar" no sistema)
+
+---
+
+## :whale: Namespaces
+
+![w:1020](./assets/img/namespaces.svg)
+
+---
+
+## :whale: Criação do Docker
+
+- Docker até a versão 0.8 era um *wrapper* para o Linux LXC (dependia da biblioteca `lxc-tools`)
+
+- Criação da biblioteca **libcontainer** em 2014 para manipulação de contêineres (portabilidade entre distribuições)
+
+> Biblioteca libcontainer foi doada à Open Container Initiative (OCI) e incorporada à `runc` (biblioteca de execução de containers utilizada pelo Kubernetes)
+
+---
+
 ## :whale: Virtualização vs. Contêinerização
 
 | Máquina Virtual (VM) | Contêiner (Docker) |
@@ -70,9 +93,6 @@ Ferramenta de automação baseada em contêineres que facilita o desenvolvimento
 | Pesado (Gigas de tamanho) | Leve (Megabytes) |
 | Velocidade de inicialização lenta | Velocidade de inicialização rápida |
 | Isolamento de SO | Isolamento de processos   |
-
-> Namespaces: Isolam os processos
-> Cgroups: Controlam o uso de recursos
 
 ---
 
@@ -99,41 +119,55 @@ Ferramenta de automação baseada em contêineres que facilita o desenvolvimento
 ```bash
 # Comando para instalar o Docker no Linux
 curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
-
+```
+```bash
 # Comandos para adicionar o usuário atual ao grupo docker
 sudo usermod -aG docker $USER
 newgrp docker # ativa o grupo docker sem reiniciar o computador
-
+```
+```bash
 # Comando para ativar o daemon do Docker
 sudo systemctl enable docker
 sudo systemctl start docker
-
+```
+```bash
 # Comando para testar a instalação do Docker
 docker -v
 ```
+
 ---
 
-## :whale: Instalação do Docker no Windows
+## :whale: Instalação dos requisitos do Docker no Windows
 
-> Requisitos: WSL 2 e ativar a virtualização na BIOS/UEFI
+> Requisitos: WSL 2 e ativar a virtualização na BIOS/UEFI (Intel VT-x ou AMD-V)
 
 ```powershell
 # Comando para instalar o WSL:
 wsl --install
-
+```
+```powershell
 # Caso esteja instalado o WSL 1, é preciso atualizá-lo com o comando:
 wsl --update
-
+```
+```powershell
 # Comando para definir o WSL 2 como padrão
 wsl --set-default-version 2
-
+```
+```powershell
 # É necessário reiniciar o computador para que o WSL 2 seja ativado através do comando:
 shutdown /r /t 0
+```
 
+---
+
+## :whale: Instalação do Docker no Windows
+
+```powershell
 # Comando para instalar o Docker no Windows
 winget install Docker.DockerDesktop
 # É necessário abrir o Docker Desktop e aguardar a inicialização do daemon
-
+```
+```powershell
 # Comando para testar a instalação do Docker
 docker -v
 ```
@@ -151,6 +185,7 @@ docker -v
 ## :whale: DockerHub
 
 Registro público de imagens Docker
+
 ![w:750](./assets/img/docker-hub.png)
 Fonte: [hub.docker.com/search](https://hub.docker.com/search)
 
@@ -190,11 +225,17 @@ FROM node:18-alpine
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-# Copia os arquivos da sua máquina para o contêiner
-COPY package.json index.js ./
+# Copia os arquivos de definição de dependências
+COPY package.json package-lock.json ./
 
 # Instala as dependências
 RUN npm install
+
+# Copia o código-fonte
+COPY index.js ./
+
+# Define o usuário que irá executar a aplicação
+USER node
 
 # Comando que o contêiner vai rodar ao iniciar
 CMD ["node", "index.js"]
@@ -445,13 +486,11 @@ O Docker Compose já vem instalado com o Docker Desktop
 
 ## :whale: Abordagem imperativa x declarativa
 
-|  | Imperativa | Declarativa |
-| :--- | :--- | :--- |
+|  | **Imperativa** | **Declarativa** |
+| :---: | :---: | :---: |
 | **Formato** | Comandos manuais | Arquivo YAML (IaC) |
 | **Implementação** | Difícil de replicar | Reprodutível e versionável (Git) |
-
-> Imperativa: *Docker CLI*
-> Declarativa: *Docker Compose*
+| **Tecnologia** | Docker CLI | Docker Compose |
 
 ---
 
@@ -535,4 +574,138 @@ docker compose logs -f
 
 - **Deploy e CI/CD**
 
-  - GitHub Actions 
+  - GitHub Actions: [github.com/erlonpr/slides-docker](https://github.com/erlonpr/slides-docker)
+
+---
+
+## :whale: Exemplo de ambiente de desenvolvimento (DevContainer)
+
+- É um ambiente de desenvolvimento inteiro rodando dentro de um container
+- Permite padronizar a versão da linguagem (Node, Python, Java) e até as extensões da IDE (VS Code)
+- Permite o compartilhamento do ambiente de desenvolvimento entre os integrantes da equipe
+
+**Requisitos necessários**
+
+> Docker + VS Code + Extensão Dev Containers (ms-vscode-remote.remote-containers)
+
+---
+
+## :whale: Exemplo de implementação de Dev Containers
+
+Criar uma pasta `.devcontainer` com um arquivo `devcontainer.json`
+
+```json
+{
+  "name": "Meu Ambiente Node.js",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },  
+  "postCreateCommand": "npm install"
+}
+```
+
+---
+
+## :whale: Exemplo de implementação de Dev Containers
+
+Criar um arquivo `package.json`
+
+```json
+{
+  "name": "exemplo-devcontainer",
+  "scripts": {
+    "start": "node index.js"
+  }
+}
+```
+
+Criar um arquivo `index.js`
+
+```javascript
+console.log("Na minha máquina funciona... e no container também!");
+```
+
+---
+
+## :whale: Exemplo de implementação de Dev Containers
+
+- Clique em `Reopen in Container`
+
+> Botão no canto inferior esquerdo
+
+- Abra o terminal do VS Code e digite: `npm start`
+
+---
+
+## :whale: Exemplo de ambiente de teste (Linux)
+
+```docker
+services:
+  linux:
+    image: lscr.io/linuxserver/webtop:latest # alpine xfce
+    container_name: linux
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo # fuso horário
+    networks:
+      - linux_network  # rede bridge
+    volumes:
+      - linux_data:/config
+    ports:
+      - 3000:3000 # http://localhost:3000
+      - 3001:3001 # https://localhost:3001
+    shm_size: "1gb" # consumo de memória RAM
+    restart: unless-stopped
+
+networks:
+  linux_network: # rede interna (VPN)
+    driver: bridge
+
+volumes:
+  linux_data: # persistência de dados
+```
+
+---
+
+## :whale: Exemplo de CI/CD
+
+```bash
+# [ WORKING DIRECTORY ]
+
+git add .
+
+# [ STAGING AREA ]
+
+git commit -m "alteração realizada"
+
+# [ LOCAL REPO ]
+
+git push
+
+# [ REMOTE REPO ]
+```
+
+GitHub Actions: [github.com/erlonpr/slides-docker/blob/main/.github/workflows/deploy.yml](https://github.com/erlonpr/slides-docker/blob/main/.github/workflows/deploy.yml)
+
+![bg right:40%](./assets/gif/git-push.gif)
+
+---
+
+## :whale: Dúvidas?
+
+- Portfólio: [erlonpr.github.io](https://erlonpr.github.io)
+- LinkedIn: [linkedin.com/in/erlonpr](https://linkedin.com/in/erlonpr)
+- GitHub: [github.com/erlonpr](https://github.com/erlonpr)
+
+```javascript
+console.log("Obrigado");
+```
+
+![bg right:40%](./assets/gif/thanks.gif)
