@@ -500,14 +500,14 @@ Abordagem **imperativa**
 
 ```bash
 docker run -d \
-  --name nome-do-container \
-  --network nome-da-rede \
-  -v nome-do-volume:/var/lib/postgresql/data \
-  -e POSTGRES_USER=nome-do-usuario \
-  -e POSTGRES_PASSWORD=senha-do-usuario \
-  -e POSTGRES_DB=nome-do-banco \
+  --name postgres \
+  --network lab_network \
+  -v pgdata:/var/lib/postgresql/data \
+  -e POSTGRES_USER=admin \
+  -e POSTGRES_PASSWORD=p@ssw0rd \
+  -e POSTGRES_DB=lab_db \
   -p 5432:5432 \
-  postgres:15-alpine
+  postgres:16-alpine
 ```
 
 ---
@@ -516,24 +516,27 @@ docker run -d \
 ```yaml
 # ABORDAGEM DECLARATIVA
 services:
-  db: # nome do serviço (DNS na rede interna)
-    container_name: nome-do-container # nome do container
-    image: postgres:15-alpine # imagem que será baixada do Docker Hub    
+  db:
+    # nome do serviço (DNS na rede interna)
+    container_name: postgres # nome do container
+    image: postgres:16-alpine # imagem que será baixada do Docker Hub    
     ports:
       - "5432:5432" # mapeamento de porta (porta do host : porta do contêiner)
     environment:
-      - POSTGRES_USER=nome-do-usuario # variável para criar o usuário
-      - POSTGRES_PASSWORD=senha-do-usuario # variável para definir a senha
-      - POSTGRES_DB=nome-do-banco # variável para criar o banco de dados
+      - POSTGRES_USER=admin # variável para criar o usuário
+      - POSTGRES_PASSWORD=p@ssw0rd # variável para definir a senha
+      - POSTGRES_DB=lab_db # variável para criar o banco de dados
     volumes:
-      - nome-do-volume:/var/lib/postgresql/data # pasta interna gerenciada pelo Docker
+      - pgdata:/var/lib/postgresql/data # pasta interna gerenciada pelo Docker
     networks:
-      - nome-da-rede # conecta este contêiner na rede definida
+      - lab_network # conecta este contêiner na rede definida
 volumes:
-  nome-do-volume: 
+  pgdata:
+    name: pgdata
     driver: local # cria um volume gerenciado pelo Docker (named volume)
 networks:
-  nome-da-rede:
+  lab_network:
+    name: lab_network
     driver: bridge # cria uma rede local virtual (isolamento)
 ```
 
@@ -596,7 +599,7 @@ Criar uma pasta `.devcontainer` com um arquivo `devcontainer.json`
 
 ```json
 {
-  "name": "Meu Ambiente Node.js",
+  "name": "Ambiente de desenvolvimento Node.js",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
   "customizations": {
     "vscode": {
@@ -618,7 +621,7 @@ Criar um arquivo `package.json`
 
 ```json
 {
-  "name": "exemplo-devcontainer",
+  "name": "example-node-app",
   "scripts": {
     "start": "node index.js"
   }
