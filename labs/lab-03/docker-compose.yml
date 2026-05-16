@@ -1,0 +1,23 @@
+services:
+  db:
+    # nome do serviço (DNS na rede interna)
+    container_name: postgres # nome do container
+    image: postgres:16-alpine # imagem que será baixada do Docker Hub    
+    ports:
+      - "5432:5432" # mapeamento de porta (porta do host : porta do contêiner)
+    environment:
+      - POSTGRES_USER=admin # variável para criar o usuário
+      - POSTGRES_PASSWORD=p@ssw0rd # variável para definir a senha
+      - POSTGRES_DB=lab_db # variável para criar o banco de dados
+    volumes:
+      - pgdata:/var/lib/postgresql/data # pasta interna gerenciada pelo Docker
+    networks:
+      - lab_network # conecta este contêiner na rede definida
+volumes:
+  pgdata:
+    name: pgdata
+    driver: local # cria um volume gerenciado pelo Docker (named volume)
+networks:
+  lab_network:
+    name: lab_network
+    driver: bridge # cria uma rede local virtual (isolamento)

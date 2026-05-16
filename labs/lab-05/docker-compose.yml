@@ -1,0 +1,24 @@
+services:
+  linux:
+    image: lscr.io/linuxserver/webtop:latest # alpine xfce
+    container_name: linux
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Sao_Paulo # fuso horário
+    networks:
+      - linux_network # rede bridge
+    volumes:
+      - linux_data:/config
+    ports:
+      - 3000:3000 # http://localhost:3000
+      - 3001:3001 # https://localhost:3001
+    shm_size: "1gb" # consumo de memória RAM
+    restart: unless-stopped
+
+networks:
+  linux_network: # rede interna (VPN)
+    driver: bridge
+
+volumes:
+  linux_data: # persistência de dados
