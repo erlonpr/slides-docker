@@ -3,6 +3,7 @@ services:
     # nome do serviço (DNS na rede interna)
     container_name: postgres # nome do container
     image: postgres:16-alpine # imagem que será baixada do Docker Hub    
+    restart: always # política de reinício
     ports:
       - "5432:5432" # mapeamento de porta (porta do host : porta do contêiner)
     environment:

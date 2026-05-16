@@ -318,7 +318,7 @@ docker logs --tail 50 meu-site
 
 ## :whale: O que é um volume?
 
-- Contêineres são voláteis 
+- Contêineres são **voláteis**
 - Volumes funcionam como uma unidade de armazenamento conectado ao contêiner.
 - Os dados sobrevivem intactos mesmo se o contêiner for destruído, atualizado ou recriado.
 ---
@@ -391,6 +391,20 @@ docker network connect rede-da-faculdade meu-site
 # Comando para remover uma rede:
 docker network rm rede-da-faculdade
 ```
+
+---
+
+## :whale: Política de reinício (restart policies)
+
+São configurações que determinam o comportamento dos contêineres quando um *crash* (falha) acontece ou quando o computador/servidor é reiniciado.
+
+
+| Política | Significado |
+| :--- | :--- |
+| **no** *(opção padrão)* | nunca reinicia automaticamente |
+| **always** | sempre reinicia automaticamente |
+| **unless-stopped** | reinicia automaticamente, exceto se for parado manualmente |
+| **on-failure** | reinicia automaticamente apenas se o contêiner falhar |
 
 ---
 
@@ -502,6 +516,7 @@ Abordagem **imperativa**
 docker run -d \
   --name postgres \
   --network lab_network \
+  --restart always \
   -v pgdata:/var/lib/postgresql/data \
   -e POSTGRES_USER=admin \
   -e POSTGRES_PASSWORD=p@ssw0rd \
@@ -520,6 +535,7 @@ services:
     # nome do serviço (DNS na rede interna)
     container_name: postgres # nome do container
     image: postgres:16-alpine # imagem que será baixada do Docker Hub    
+    restart: always # política de reinício
     ports:
       - "5432:5432" # mapeamento de porta (porta do host : porta do contêiner)
     environment:
