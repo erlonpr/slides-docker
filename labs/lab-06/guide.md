@@ -14,80 +14,11 @@ A estrutura do GitHub Actions é dividida em alguns conceitos principais:
 - **Runners:** Os servidores (máquinas virtuais) onde as tarefas rodam de fato (ex: um servidor Linux Ubuntu cedido pelo GitHub).
 - **Steps:** As ações individuais executadas dentro de um job. Um passo pode ser um simples comando de terminal (`run`) ou o uso de uma **Action** pronta (um pacote de código reutilizável, que pode inclusive ser a execução de um contêiner Docker).
 
-Abaixo, analisaremos detalhadamente um exemplo real de workflow que utiliza um contêiner Docker do Marp para converter arquivos Markdown em slides e publicá-los no GitHub Pages.
+Para visualizar um exemplo prático de CI/CD utilizando um contêiner Docker com GitHub Actions, acesse a seguinte URL:
 
-## Arquivo .github/workflows/deploy.yml
+- [https://github.com/erlonpr/slides-docker/blob/main/.github/workflows/deploy.yml](https://github.com/erlonpr/slides-docker/blob/main/.github/workflows/deploy.yml)
 
-```yaml
-# Nome do workflow que aparecerá na aba "Actions" do GitHub
-name: Deploy Marp Slides
-
-# Define quando o workflow será executado (gatilhos)
-on:
-  push:
-    # O workflow será disparado sempre que houver um push para a branch "main"
-    branches:
-      - main
-
-# Configura as permissões necessárias para o GITHUB_TOKEN realizar o deploy no GitHub Pages
-permissions:
-  contents: read # Permissão para ler o conteúdo do repositório
-  pages: write # Permissão para escrever/publicar no GitHub Pages
-  id-token: write # Necessário para autenticação segura (OIDC) no deploy
-
-jobs:
-  # Primeiro job: Responsável por converter o Markdown em HTML e preparar os arquivos
-  build:
-    runs-on: ubuntu-latest # Executa em uma máquina virtual Linux atualizada
-    steps:
-      # Passo 1: Faz o "download" do código do repositório para dentro da máquina virtual
-      - name: Checkout code
-        uses: actions/checkout@v4 # JavaScript/TypeScript script
-
-      # Passo 2: Configura o ambiente específico do GitHub Pages
-      - name: Setup Pages
-        uses: actions/configure-pages@v4 # JavaScript/TypeScript script
-
-      # Passo 3: Usa o Docker para rodar o Marp CLI e converter o arquivo index.md
-      - name: Build Marp Slides
-        uses: docker://marpteam/marp-cli # Docker Container Action
-        with:
-          # index.md: arquivo de origem
-          # --html: permite tags HTML dentro do Markdown
-          # --allow-local-files: permite carregar imagens locais
-          # -o dist/index.html: define a pasta de saída e o nome do arquivo
-          args: index.md --html --allow-local-files -o dist/index.html
-        env:
-          # Define o usuário root para evitar problemas de permissão na criação da pasta 'dist' pelo Docker
-          MARP_USER: root:root
-
-      # Passo 4: Copia a pasta de assets (imagens, etc) para a pasta de distribuição (dist)
-      - name: Copy Assets
-        run: |
-          # Garante que o usuário atual tem permissão na pasta criada pelo Docker
-          sudo chown -R $USER:$USER dist
-          # Copia os arquivos recursivamente
-          cp -r assets dist/
-
-      # Passo 5: Cria um "pacote" (artefato) com os arquivos prontos para o deploy
-      - name: Upload Artifact
-        uses: actions/upload-pages-artifact@v3 # JavaScript/TypeScript script
-        with:
-          path: dist/ # Indica que o conteúdo para deploy está na pasta 'dist'
-
-  # Segundo job: Responsável por pegar o artefato criado e publicar no servidor do GitHub Pages
-  deploy:
-    needs: build # Este job só começa depois que o 'build' terminar com sucesso
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages # Vincula à configuração de ambiente do GitHub Pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      # Passo Final: Realiza a publicação oficial no site
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4 # JavaScript/TypeScript script
-```
+*(Neste arquivo, você poderá analisar detalhadamente como um contêiner do Marp CLI é utilizado como uma Action para converter os arquivos Markdown em slides e publicá-los no GitHub Pages).*
 
 
 
