@@ -55,7 +55,7 @@ Programador | **Devops** | Infraestrutura
 
 Ferramenta de automação baseada em contêineres que facilita o desenvolvimento, testes e deployment de aplicações.
 
-![bg right:40%](./assets/gif/developer.gif)
+![bg right:40%](./assets/gif/wow.gif)
 
 ---
 
@@ -216,8 +216,7 @@ Fonte: [hub.docker.com/search](https://hub.docker.com/search)
 
 ## :whale: Dockerfile
 
-Arquivo YAML com as instruções para montar uma imagem
-
+Arquivo de manifesto com instruções para montar uma imagem
 ```dockerfile
 # Define a imagem base obtida no Docker Hub
 FROM node:18-alpine
@@ -233,9 +232,6 @@ RUN npm install
 
 # Copia o código-fonte
 COPY index.js ./
-
-# Define o usuário que irá executar a aplicação
-USER node
 
 # Comando que o contêiner vai rodar ao iniciar
 CMD ["node", "index.js"]
@@ -269,6 +265,16 @@ docker build -t meu-app .
 
 ---
 
+## :whale: Laboratório
+
+> Vamos praticar o que foi aprendido até agora!
+
+[Clique aqui](https://github.com/erlonpr/slides-docker/blob/main/labs/lab-01/guide.md) para acessar o **laboratório 01**
+
+![bg right:40%](./assets/gif/labs.gif)
+
+---
+
 ## :whale: O que é um contêiner?
 
 - É a **imagem em execução** (instância da "receita").
@@ -299,6 +305,17 @@ docker start meu-site
 # Comando para remover um contêiner (ele precisa estar parado):
 docker rm meu-site
 ```
+
+---
+
+## :whale: Laboratório
+
+> Vamos praticar o que foi aprendido até agora!
+
+[Clique aqui](https://github.com/erlonpr/slides-docker/blob/main/labs/lab-02/guide.md) para acessar o **laboratório 02**
+
+![bg right:40%](./assets/gif/labs.gif)
+
 ---
 
 ## :whale: Como ver os logs do container
@@ -558,6 +575,16 @@ networks:
 
 ---
 
+## :whale: Laboratório
+
+> Vamos praticar o que foi aprendido até agora!
+
+[Clique aqui](https://github.com/erlonpr/slides-docker/blob/main/labs/lab-03/guide.md) para acessar o **laboratório 03**
+
+![bg right:40%](./assets/gif/labs.gif)
+
+---
+
 ## :whale: Comandos básicos do Docker Compose
 
 > Comandos devem ser executados no mesmo diretório onde se encontra o arquivo `docker-compose.yml`
@@ -609,91 +636,38 @@ docker compose logs -f
 
 ---
 
-## :whale: Exemplo de implementação de Dev Containers
+## :whale: Laboratório
 
-Criar uma pasta `.devcontainer` com um arquivo `devcontainer.json`
+> Vamos praticar o que foi aprendido até agora!
 
-```json
-{
-  "name": "Ambiente de desenvolvimento Node.js",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode"
-      ]
-    }
-  },  
-  "postCreateCommand": "npm install"
-}
-```
+[Clique aqui](https://github.com/erlonpr/slides-docker/blob/main/labs/lab-04/guide.md) para acessar o **laboratório 04**
+
+![bg right:40%](./assets/gif/labs.gif)
 
 ---
 
-## :whale: Exemplo de implementação de Dev Containers
+## :whale: OS as a Container
 
-Criar um arquivo `package.json`
-
-```json
-{
-  "name": "example-node-app",
-  "scripts": {
-    "start": "node index.js"
-  }
-}
-```
-
-Criar um arquivo `index.js`
-
-```javascript
-console.log("Na minha máquina funciona... e no container também!");
-```
+| Característica | Máquina virtual | Docker |
+| :--- | :--- | :--- |
+| **Tamanho/Espaço** | Arquivos gigantes | Extremamente leve |
+| **Recursos (RAM/CPU)** | Alto (fixo e dedicado) | Baixo (compartilhado) |
+| **Inicialização** | Boot lento | Boot rápido |
+| **Acesso Gráfico** | Requer software dedicado pesado | Pelo navegador web |
 
 ---
 
-## :whale: Exemplo de implementação de Dev Containers
+## :whale: Laboratório
 
-- Clique em `Reopen in Container`
+> Vamos praticar o que foi aprendido até agora!
 
-> Botão no canto inferior esquerdo
+[Clique aqui](https://github.com/erlonpr/slides-docker/blob/main/labs/lab-05/guide.md) para acessar o **laboratório 05**
 
-- Abra o terminal do VS Code e digite: `npm start`
-
----
-
-## :whale: Exemplo de ambiente de teste (Linux)
-
-```docker
-services:
-  linux:
-    image: lscr.io/linuxserver/webtop:latest # alpine xfce
-    container_name: linux
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Sao_Paulo # fuso horário
-    networks:
-      - linux_network  # rede bridge
-    volumes:
-      - linux_data:/config
-    ports:
-      - 3000:3000 # http://localhost:3000
-      - 3001:3001 # https://localhost:3001
-    shm_size: "1gb" # consumo de memória RAM
-    restart: unless-stopped
-
-networks:
-  linux_network: # rede interna (VPN)
-    driver: bridge
-
-volumes:
-  linux_data: # persistência de dados
-```
+![bg right:40%](./assets/gif/labs.gif)
 
 ---
 
-## :whale: Exemplo de CI/CD
+## :whale: CI/CD com GitHub Actions
 
 ```bash
 # [ WORKING DIRECTORY ]
@@ -709,11 +683,24 @@ git commit -m "alteração realizada"
 git push
 
 # [ REMOTE REPO ]
+
+github actions
+
+# [ GITHUB PAGES ]
+
 ```
 
-GitHub Actions: [github.com/erlonpr/slides-docker/blob/main/.github/workflows/deploy.yml](https://github.com/erlonpr/slides-docker/blob/main/.github/workflows/deploy.yml)
-
 ![bg right:40%](./assets/gif/git-push.gif)
+
+---
+
+## :whale: Laboratório
+
+> Vamos praticar o que foi aprendido até agora!
+
+[Clique aqui](https://github.com/erlonpr/slides-docker/blob/main/labs/lab-06/guide.md) para acessar o **laboratório 06**
+
+![bg right:40%](./assets/gif/labs.gif)
 
 ---
 
