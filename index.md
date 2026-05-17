@@ -197,6 +197,7 @@ Fonte: [hub.docker.com/search](https://hub.docker.com/search)
 - **Contêiner**: Instância de uma imagem
 - **Volume**: Armazenamento persistente
 - **Rede**: Comunicação entre contêineres
+- **Política de restart**: Define como o contêiner deve se comportar quando o contêiner falhar ou quando o daemon do Docker for reiniciado
 - **Variáveis de ambiente**: Configurações dos contêineres
 
 ---
