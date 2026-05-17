@@ -15,13 +15,13 @@ Este laboratório tem como objetivo demonstrar, na prática, como é fácil subi
 - Na tela do GitHub, no canto superior direito da caixa de código, clique no botão **Download raw file** (representado pelo ícone de uma setinha de download).
 - Salve o arquivo baixado dentro da sua pasta `lab-05` garantindo que o nome do arquivo permaneça exatamente como `docker-compose.yml`.
 
-**3. Subindo o Ambiente Linux:**
+**3. Subindo o ambiente Linux:**
 - Com a extensão oficial do Docker já instalada no seu VS Code, vá no explorador de arquivos na lateral esquerda.
 - Clique com o **botão direito do mouse** sobre o arquivo `docker-compose.yml`.
 - Selecione a opção **Compose Up**. 
 - O Docker começará a baixar a imagem e criar o contêiner. Isso pode levar alguns minutos, pois ele está baixando um sistema operacional inteiro!
 
-**4. Acessando o seu novo Desktop:**
+**4. Acessando o seu novo desktop:**
 - Após o terminal indicar que o contêiner foi iniciado com sucesso, abra o seu navegador de internet 
 - Acesse a seguinte URL: [http://localhost:3000](http://localhost:3000)
 

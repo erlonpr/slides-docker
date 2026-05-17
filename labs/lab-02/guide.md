@@ -1,8 +1,8 @@
-# Lab 02 - Acessando o interior de um Contêiner
+# Lab 02 - Acessando o interior de um contêiner
 
 Neste laboratório vamos criar um contêiner Alpine (que rodará em segundo plano) e em seguida vamos entrar no terminal interativo dele. A imagem do Alpine é extremamente leve (cerca de 5MB) e o download é praticamente instantâneo.
 
-## Passo a Passo
+## Passo a passo
 
 > **Preparação:** Antes de iniciar os comandos deste laboratório, abra o seu terminal de preferência. Eu recomendo utilizar o **Windows Terminal (PowerShell)** ou o terminal integrado do **VS Code**.
 
@@ -12,20 +12,26 @@ O comando abaixo baixa a imagem do Alpine e a executa em modo *detached* (`-d`).
 docker run -it -d --name lab-alpine alpine
 ```
 
-**2. Acessar o terminal do contêiner em execução:**
+**2. Verificar o contêiner em execução:**
+Utilize o comando `docker ps` para listar os contêineres que estão rodando atualmente. Você deverá ver o seu contêiner `lab-alpine` na lista.
+```bash
+docker ps
+```
+
+**3. Acessar o terminal do contêiner em execução:**
 O comando `exec` permite executar um novo processo dentro de um contêiner já existente. Usamos `-it` para abrir uma sessão interativa (Terminal) usando o `sh` (o Alpine não vem com bash instalado por padrão para economizar espaço).
 ```bash
 docker exec -it lab-alpine sh
 ```
 > *Dica: Assim que executar o comando acima, repare que o seu prompt mudará (ex: `/ #`). Agora você está executando comandos dentro do Alpine! Tente rodar `cat /etc/os-release` ou `ls`.*
 
-**3. Sair do contêiner:**
+**4. Sair do contêiner:**
 Para sair do terminal interativo do Alpine e voltar para a sua máquina hospedeira, digite:
 ```bash
 exit
 ```
 
-**4. Limpar o laboratório:**
+**5. Limpar o laboratório:**
 Como o contêiner foi criado em background, ele continuará rodando. Para pará-lo e removê-lo, execute:
 ```bash
 docker rm -f lab-alpine

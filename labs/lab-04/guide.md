@@ -1,8 +1,8 @@
-# Lab 04 - DevContainers (Ambiente de Desenvolvimento Node.js)
+# Lab 04 - DevContainers com Node.js
 
 Este laboratório tem como objetivo demonstrar, na prática, como é fácil preparar um ambiente de desenvolvimento padronizado e isolado utilizando a extensão **Dev Containers** do VS Code. Vamos rodar uma aplicação Node.js sem precisar instalar o Node.js na sua própria máquina!
 
-## Passo a Passo
+## Passo a passo
 
 **1. Preparando a pasta do projeto:**
 - Crie uma pasta no seu computador chamada `lab-04`.
@@ -21,12 +21,12 @@ Este laboratório tem como objetivo demonstrar, na prática, como é fácil prep
   - [devcontainer.json](https://github.com/erlonpr/slides-docker/blob/main/labs/lab-04/.devcontainer/devcontainer.json)
 - Salve esse arquivo **dentro** da pasta `.devcontainer` que você acabou de criar.
 
-**4. Instalando a Extensão Dev Containers:**
+**4. Instalando a extensão Dev Containers:**
 - No VS Code, abra a aba de **Extensions** (Extensões) na barra lateral esquerda.
 - Pesquise por **Dev Containers** (extensão oficial da Microsoft, com identificador `ms-vscode-remote.remote-containers`).
 - Clique em **Install** e aguarde a conclusão.
 
-**5. Abrindo o projeto dentro do Contêiner:**
+**5. Abrindo o projeto dentro do contêiner:**
 - Pressione a tecla `F1` (ou `Ctrl+Shift+P` no Windows/Linux, `Cmd+Shift+P` no Mac) para abrir a Paleta de Comandos do VS Code.
 - Digite **`Dev Containers: Reopen in Container`** e selecione essa opção.
 - O VS Code vai recarregar a janela e começar a construir o contêiner com o ambiente Node.js. *Nota: Esse processo pode demorar alguns minutos na primeira vez, pois a imagem base do Node.js será baixada da internet.*

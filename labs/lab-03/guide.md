@@ -1,10 +1,10 @@
-# Lab 03 - Banco de Dados com Docker Compose
+# Lab 03 - Banco de dados PostgreSQL com Docker Compose
 
 Este laboratório guiará você na criação de um banco de dados PostgreSQL utilizando o Docker Compose e na conexão a ele diretamente pelo VS Code.
 
-## Passo a Passo
+## Passo a passo
 
-**1. Preparando o ambiente:**
+**1. Preparando a pasta do projeto:**
 - Crie uma pasta no seu computador chamada `lab-03`.
 - Abra o VS Code.
 - Vá em `File > Open Folder...` (Arquivo > Abrir Pasta...) e selecione a pasta `lab-03` que você acabou de criar.
@@ -19,17 +19,17 @@ Este laboratório guiará você na criação de um banco de dados PostgreSQL uti
 - No VS Code, abra a aba de Extensões (`Ctrl+Shift+X` ou `Cmd+Shift+X` no Mac).
 - Busque e instale a extensão oficial do **Docker** (ID: `ms-azuretools.vscode-docker`).
 
-**4. Subindo o Banco de Dados:**
+**4. Subindo o banco de dados:**
 - Após instalar a extensão do Docker, volte para o explorador de arquivos do VS Code.
 - Clique com o **botão direito do mouse** sobre o arquivo `docker-compose.yml`.
 - Escolha a opção **Compose Up**. O Docker vai baixar a imagem do PostgreSQL e iniciar o banco de dados em segundo plano.
 
-**5. Preparando para conectar no Banco de Dados:**
+**5. Preparando para conectar no banco de dados:**
 - Vá novamente na aba de Extensões do VS Code.
 - Busque e instale a ferramenta de banco de dados **SQLTools** (ID: `mtxr.sqltools`).
 - Em seguida, instale também o driver específico para PostgreSQL: **SQLTools PostgreSQL/Cockroach Driver** (ID: `mtxr.sqltools-driver-pg`).
 
-**6. Acessando o Banco de Dados:**
+**6. Acessando o banco de dados:**
 - Com as extensões instaladas, um novo ícone de banco de dados (SQLTools) aparecerá na barra lateral esquerda do VS Code.
 - Clique nele, adicione uma nova conexão clicando em "Add New Connection" e escolha **PostgreSQL**.
 - Preencha os dados de conexão de acordo com as variáveis de ambiente definidas no arquivo `docker-compose.yml`:
@@ -61,7 +61,7 @@ SELECT * FROM docker;
 ```
 - Para executar, basta selecionar todo o bloco de código acima no VS Code e clicar em **Run Selected Query** no menu que aparece em cima do código ou usar o atalho `Ctrl+E`, `Ctrl+E`.
 
-**8. Encerrando o Banco de Dados:**
+**8. Encerrando o banco de dados:**
 - Após finalizar os seus testes, é uma boa prática desligar o ambiente para não consumir os recursos do seu computador à toa.
 - Volte para o explorador de arquivos do VS Code.
 - Clique com o **botão direito do mouse** sobre o arquivo `docker-compose.yml`.

@@ -1,8 +1,8 @@
-# Lab 01 - Primeiros Passos com Docker
+# Lab 01 - Primeiros passos com o Docker
 
 Este laboratório tem o objetivo de demonstrar a execução do seu primeiro contêiner e o gerenciamento básico pelo terminal.
 
-## Passo a Passo
+## Passo a passo
 
 > **Preparação:** Antes de iniciar os comandos deste laboratório, abra o seu terminal de preferência. Eu recomendo utilizar o **Windows Terminal (PowerShell)** ou o terminal integrado do **VS Code**.
 
