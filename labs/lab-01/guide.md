@@ -4,6 +4,8 @@ Este laboratório tem o objetivo de demonstrar a execução do seu primeiro cont
 
 ## Passo a Passo
 
+> **Preparação:** Antes de iniciar os comandos deste laboratório, abra o seu terminal de preferência. Eu recomendo utilizar o **Windows Terminal (PowerShell)** ou o terminal integrado do **VS Code**.
+
 **1. Executar o Hello World:**
 O comando abaixo irá baixar a imagem `hello-world` do Docker Hub (caso não tenha na máquina local) e executá-la. Essa imagem apenas imprime uma mensagem de sucesso e o contêiner é encerrado logo em seguida.
 ```bash

@@ -12,7 +12,8 @@ Este laboratório guiará você na criação de um banco de dados PostgreSQL uti
 **2. Obtendo o arquivo de configuração:**
 - Acesse a seguinte URL no seu navegador:
   [https://github.com/erlonpr/slides-docker/blob/main/labs/lab-03/docker-compose.yml](https://github.com/erlonpr/slides-docker/blob/main/labs/lab-03/docker-compose.yml)
-- Baixe esse arquivo e salve-o dentro da pasta `lab-03` com o nome exato de `docker-compose.yml`. (Dica: você pode copiar o conteúdo e criar o arquivo manualmente no VS Code também).
+- Na tela do GitHub, no canto superior direito da caixa de código, clique no botão **Download raw file** (representado pelo ícone de uma setinha de download).
+- Salve o arquivo baixado dentro da sua pasta `lab-03` garantindo que o nome do arquivo permaneça exatamente como `docker-compose.yml`. (Dica: você também pode copiar o conteúdo da página e criar o arquivo manualmente direto no VS Code).
 
 **3. Instalando a extensão do Docker no VS Code:**
 - No VS Code, abra a aba de Extensões (`Ctrl+Shift+X` ou `Cmd+Shift+X` no Mac).
