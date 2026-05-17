@@ -87,25 +87,30 @@ Ferramenta de automação baseada em contêineres que facilita o desenvolvimento
 
 ## :whale: Virtualização vs. Contêinerização
 
-| Máquina Virtual (VM) | Contêiner (Docker) |
+| Máquina Virtual | Contêiner |
 | :--- | :--- |
-| Emula o hardware e possui um SO completo | Compartilha o Kernel do SO hospedeiro |
-| Pesado (Gigas de tamanho) | Leve (Megabytes) |
-| Velocidade de inicialização lenta | Velocidade de inicialização rápida |
-| Isolamento de SO | Isolamento de processos   |
+| Emula o hardware e possui SO completo | Compartilha o Kernel do SO hospedeiro |
+| Pesado | Leve |
+| Inicialização lenta | Inicialização rápida |
+| Isolamento de SO | Isolamento de processos |
 
 ---
 
-## :whale: Arquitetura do Docker
+## :whale: Arquitetura de contêinerização vs. virtualização
 
-- Docker
+- **Contêinerização**
 ```
-[Hardware] -> [Kernel SO Host] -> [Docker Daemon] -> [Contêineres] -> [Aplicação]
+[Hardware] -> [SO Host] -> [Docker Engine] -> [Container (Bins + Libs)] -> [App]
 ```
 
-- Virtualização
+- **Virtualização Hosted**
 ```
-[Hardware] -> [Kernel SO Host] -> [Hypervisor Hosted] -> [SO Convidado] -> [Aplicação]
+[Hardware] -> [SO Host] -> [Hypervisor] -> [SO Guest (Bins + Libs)] -> [App]
+```
+
+- **Virtualização Bare-metal**
+```
+[Hardware] -> [Hypervisor] -> [SO Guest (Bins + Libs)] -> [App]
 ```
 
 > *Hypervisor: software que cria e executa máquinas virtuais*
@@ -240,11 +245,13 @@ CMD ["node", "index.js"]
 
 ---
 
-## :whale: Fluxo de construção de imagens
+## :whale: Fluxo de execução de contêineres
 
 ![w:1000](./assets/img/dockerfile.png)
 
 Fonte: [medium.com/swlh/understand-dockerfile-dd11746ed183](https://medium.com/swlh/understand-dockerfile-dd11746ed183)
+
+> **Dockerfile**: *ingredientes* ➔ **Imagem**: *receita* ➔ **Contêiner**: *bolo*
 
 ---
 
@@ -297,10 +304,10 @@ docker ps -a
 # Comando para criar e rodar um novo contêiner em segundo plano:
 docker run -d --name meu-site nginx
 
-# Comando para parar um contêiner existente:
+# Comando para parar um contêiner em execução:
 docker stop meu-site
 
-# Comando para reiniciar um contêiner existe:
+# Comando para iniciar um contêiner parado:
 docker start meu-site
 
 # Comando para remover um contêiner (ele precisa estar parado):
@@ -319,7 +326,7 @@ docker rm meu-site
 
 ---
 
-## :whale: Como ver os logs do container
+## :whale: Como ver os logs do contêiner
 
 ```bash
 # Comando para ver o histórico completo de log:
@@ -376,7 +383,7 @@ docker volume prune
 
 - Contêineres nascem totalmente isolados.
 - As redes permitem que contêineres falem entre si, com a máquina host ou com a internet de forma segura.
-- O Docker utiliza um DNS interno para que um contêiner acha o outro apenas pelo *nome* (não precisa descobrir o IP)
+- O Docker utiliza um DNS interno (em redes bridge customizadas) para que um contêiner encontre o outro apenas pelo *nome* (não precisa descobrir o IP)
 
 ---
 
@@ -384,7 +391,7 @@ docker volume prune
 
 | Tipo | Como funciona? | Quando usar? |
 | :--- | :--- | :--- |
-| **Bridge** | Rede virtual interna (VPN ) com port mapping (*tipo de rede padrão*) | Comunicação entre contêineres no mesmo PC por meio de IP internos |
+| **Bridge** | Rede isolada com switch virtual e port mapping (*tipo de rede padrão*) | Comunicação entre contêineres no mesmo PC por meio de IP internos |
 | **Host** | O contêiner usa a mesma rede da máquina (Remove o isolamento) | Quando precisa de máxima performance e não quer mapear portas |
 | **None** | Desabilita totalmente a rede (somente interface loopback) | Scripts isolados de segurança máxima |
 | **Overlay** | Conecta contêineres em servidores diferentes por meio de um túnel VXLAN | Ambientes complexos / Clusterização (Docker Swarm) |
